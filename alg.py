@@ -174,22 +174,21 @@ class Items_Venda(Produto):
         print ('--------------------------------------------------')
 
 Estoque = Estoque('Estoque1' , '20121200')
-a = Produto('001' , '09/10/2019' , '22h' , 'camiseta' , '100.00' , 20)
-b = Produto('002' , '09/10/2019' , '22h' , 'calça' , '200.00' , 30)
-c = Produto('0032' , '09/10/2019' , '12h' , 'moletom' , '300.00' , 2)
+produto_a = Produto('001' , '14/01/2022' , '02h' , 'camiseta do Grêmio 2021' , '100.00' , 20)
+produto_b = Produto('002' , '01/02/2022' , '22h' , 'calça jeans' , '200.00' , 30)
+produto_c = Produto('0032' , '16/04/2022' , '12h' , 'moletom preto' , '300.00' , 2)
 
 
 
-Estoque.Adicionar_Produto_Estoque(a)
-Estoque.Adicionar_Produto_Estoque(b)
-Estoque.Adicionar_Produto_Estoque(c)
+Estoque.Adicionar_Produto_Estoque(produto_a)
+Estoque.Adicionar_Produto_Estoque(produto_b)
+Estoque.Adicionar_Produto_Estoque(produto_c)
 Estoque.imprime_detalhadamente_Lista_de_Produtos()
 
 
-sacola = Vendas(a.data)
-sacola.adiciona_item(a)
-sacola.adiciona_item(b)
-sacola.adiciona_item(c)
+sacola = Vendas(produto_a.data)
+sacola.adiciona_item(produto_a)
+sacola.adiciona_item(produto_b)
+sacola.adiciona_item(produto_c)
 sacola.imprime_Lista_de_Vendas_no_carrinho()
 sacola.concluir_venda()
-# Preco.aloca_item(a,a,Estoque)
