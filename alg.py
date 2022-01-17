@@ -32,7 +32,6 @@ class Estoque(Produto):
     def imprime_Nome_Estoque(self):
         print("----------------Nome do Estoque : " + str(self.Nome_Estoque))
 
-
     def imprime_Lista_de_Produtos_Estoque(self):
         print("----------------imprimindo Lista de Produtos-------------")
         tam = self.Lista_de_Produtos.__len__()
@@ -40,11 +39,9 @@ class Estoque(Produto):
             Produto = self.Lista_de_Produtos[i]
             print(Produto.codigo)
 
-
     def imprime_Lista_de_Vendas(self):
         print("----------------imprimindo Lista de vendas-------------")
         print(self.Lista_de_Venda)
-
 
     def imprime_numero(self):
         print ('Numero de Identificação do Estoque : '+ str(self.id))
@@ -66,7 +63,6 @@ class Estoque(Produto):
         print(str(Produto.preco)+str('R$'))
         print("-------------------- ------------------------------ ----------------------")
 
-
     def Adicionar_Venda_Estoque(self, venda):
         self.Lista_de_Venda.append(venda)
         #print (self.Lista_de_Venda)
@@ -84,7 +80,6 @@ class Vendas(Estoque) :
     def concluir_venda(self):
         print('Concluindo Compra !!!')
         self.status = True
-
 
     def adiciona_item(self , Produto):
       if(self.status == False):
@@ -112,7 +107,6 @@ class Vendas(Estoque) :
         print("----------------------------------------------------")
 
     def info_detalhes(self):
-
         print("---------------Informações--------------------------")
         print ("Item : "+str(self.item))
         print ("Codigo : "+str(self.codigo))
@@ -126,15 +120,12 @@ class Vendas(Estoque) :
 
     def remove_item(self , Produto):
        try:
-
            flag =  self.Lista_de_Vendas_carrinho.index(Produto)
            print("Codigo encontrado :" + str(Produto.codigo))
            self.Lista_de_Vendas_carrinho.pop(flag)
 
        except ValueError:
-
            print('Erro codigo não encontrado :'+str(Produto.codigo))
-
 
 class Preco(Produto):
 
@@ -165,7 +156,6 @@ class Items_Venda(Produto):
         self.data = data
         self.quantidade = qtd
         self.status = status
-
 
     def imprime_quantidade_de_Items_Venda(self):
         print('\n\n\n\n\n------------------ITEM VENDIDO---------------------------')
