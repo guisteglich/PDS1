@@ -1,8 +1,10 @@
+from datetime import datetime
 class Produto:
 
-    def __init__(self , codigo , data , hora , nome , preco , quantidade):
+    def __init__(self, codigo, data_inicial, data_final, hora, nome, preco, quantidade):
         self.codigo = codigo
-        self.data = data
+        self.data_inicial = data_inicial
+        self.data_final = data_final
         self.hora = hora
         self.nome = nome 
         self.preco = preco
@@ -14,7 +16,8 @@ class Produto:
         print ("Preco : " + str (self.preco) + ' R$')
         print ("Codigo : "+str(self.codigo))
         print ("Quantidade : " + str (self.quantidade) +' unidades')
-        print ("Data : "+str(self.data))
+        print ("Data início preço: "+str(self.data_inicial))
+        print ("Data fim preço: "+str(self.data_final))
         print ("Hora : "+str(self.hora))
 
 class Estoque(Produto):
@@ -47,16 +50,12 @@ class Estoque(Produto):
         print ('Numero de Identificação do Estoque : '+ str(self.id))
 
     def imprime_detalhadamente_Lista_de_Produtos(self):
-
         print("--------------------Lista detalhada de Produtos ----------------------")
         aux = 0
         tam = self.Lista_de_Produtos.__len__()
         for i in range (tam):
             Produto = self.Lista_de_Produtos[i]
             Produto.info_detalhes()
-
-        print("-----------------------------------------------------------------------")
-
 
     def Adicionar_Produto_Estoque(self ,Produto):
         print("-------------------- Adicionando Produto ao Estoque ----------------------")
@@ -97,15 +96,18 @@ class Vendas(Estoque) :
         print('----Impossivel add produto Compra Concluida !!!')
 
     def imprime_Lista_de_Vendas_no_carrinho(self):
-
         print("---------------- Produtos no carrinho--------------------")
 
         tam = self.Lista_de_Vendas_carrinho.__len__()
         for i in range(tam):
             Produto = self.Lista_de_Vendas_carrinho[i]
-            self.total += float(Produto.preco)
-            # print(self.total)
-            print(Produto.nome + str('               ') + str(Produto.preco) + str('R$'))
+          
+            data_inicial = datetime.strptime(Produto.data_inicial, "%d/%m/%Y")
+            data_final = datetime.strptime(Produto.data_final,  "%d/%m/%Y")
+           
+            if data_inicial <= self.data_venda <= data_final:
+                self.total += float(Produto.preco)
+                print(Produto.nome + str('               ') + str(Produto.preco) + str('R$'))
         print('Valor Total : '+ str(self.total) + ' R$')
         print("----------------------------------------------------")
 
@@ -122,15 +124,12 @@ class Vendas(Estoque) :
         tam = self.Lista_de_Vendas_carrinho.__len__ ()
         return (tam)
 
-
-
     def remove_item(self , Produto):
        try:
 
            flag =  self.Lista_de_Vendas_carrinho.index(Produto)
            print("Codigo encontrado :" + str(Produto.codigo))
            self.Lista_de_Vendas_carrinho.pop(flag)
-
 
        except ValueError:
 
@@ -140,9 +139,12 @@ class Vendas(Estoque) :
 class Preco(Produto):
 
     def __init__(self , Produto):
+        data_inicial = datetime.strptime(Produto.data_inicial, "%d/%m/%y")
+        data_final = datetime.strptime(Produto.data_final, "%d/%m/%y")
 
         self.preco = Produto.preco
-        self.data_inicial = Produto.data
+        self.data_inicial = data_inicial
+        self.data_final = data_final
         self.hora = Preco.hora
         self.item = Preco.nome
 
@@ -174,19 +176,20 @@ class Items_Venda(Produto):
         print ('--------------------------------------------------')
 
 Estoque = Estoque('Estoque1' , '20121200')
-produto_a = Produto('001' , '14/01/2022' , '02h' , 'camiseta do Grêmio 2021' , '100.00' , 20)
-produto_b = Produto('002' , '01/02/2022' , '22h' , 'calça jeans' , '200.00' , 30)
-produto_c = Produto('0032' , '16/04/2022' , '12h' , 'moletom preto' , '300.00' , 2)
-
+produto_a = Produto('001' , '14/01/2022' , '16/04/2022', '02h' , 'camiseta do Grêmio 2021' , '100.00' , 20)
+produto_b = Produto('002' , '01/02/2022' , '16/02/2022', '22h' , 'calça jeans' , '200.00' , 30)
+produto_c = Produto('0032' , '16/01/2022' , '16/02/2022', '12h' , 'moletom preto' , '300.00' , 2)
+produto_a2 = Produto(produto_a.codigo, '17/01/2022', '25/02/2022', '10h', produto_a.nome, '250', 10)
 
 
 Estoque.Adicionar_Produto_Estoque(produto_a)
 Estoque.Adicionar_Produto_Estoque(produto_b)
 Estoque.Adicionar_Produto_Estoque(produto_c)
+Estoque.Adicionar_Produto_Estoque(produto_a2)
 Estoque.imprime_detalhadamente_Lista_de_Produtos()
 
 
-sacola = Vendas(produto_a.data)
+sacola = Vendas(datetime.now())
 sacola.adiciona_item(produto_a)
 sacola.adiciona_item(produto_b)
 sacola.adiciona_item(produto_c)
